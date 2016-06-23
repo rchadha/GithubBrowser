@@ -11,6 +11,8 @@ import {
   TouchableHighlight,
   ActivityIndicatorIOS
 } from 'react-native';
+var buffer = require('buffer');
+
 
 class Login extends Component {
 	constructor(props){
@@ -46,6 +48,18 @@ class Login extends Component {
 	onLoginPressed(){
 			console.log('Attempting to login with username ' + this.state.username)
 			this.setState({showProgress: true}); 
+
+			var b = new buffer.Buffer('hello');
+			console.log(b.toString('base64'));
+
+			// fetch('https://api.github.com/search/repositories?q=react')
+			// .then((response)=> {
+			// 	return response.json();
+			// })
+			// .then((results)=> {
+			// 	console.log(results);
+			// 	this.setState({showProgress: false});
+			// });
 		}
 }
 
