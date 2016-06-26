@@ -15,12 +15,37 @@ import {
 var Login = require('./Login');
 
 class GithubBrowser extends Component {
-  render() {
-    var message = 'hello there!!!';
-    return (
-      <Login />
-    );
+  constructor(props){
+    super(props);
+  
+    this.state = {
+      isLoggedIn: false
+    };
   }
+
+  render() {
+    if(this.state.isLoggedIn){
+      return (
+          <View style={styles.container}>
+            <Text style={styles.welcome}> Login success </Text>
+          </View>
+        )
+
+    }else{
+      return (
+        <Login onLogin={this.onLogin} />
+        )
+    }
+    
+  }
+  onLogin() {
+    this.setState({isLoggedIn: true});
+  }
+  // getInitialState(){
+  //   return {
+  //     isLoggedIn: false
+  //   }
+  // }
 }
 
 const styles = StyleSheet.create({
