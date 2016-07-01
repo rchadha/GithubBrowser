@@ -17,16 +17,14 @@ var Login = require('./Login');
 var AuthService = require('./AuthService');
 
 class GithubBrowser extends Component {
-  componentDidMount() {
-    AuthService.getAuthInfo((err, authInfo)=> {
-      this.setState({
-        checkingAuth: false,
-        isLoggedIn: authInfo != null
-      })
-    });
-  }
-
+  // getInitialState() {
+  //   return {
+  //     isLoggedIn: false,
+  //     checkingAuth: true
+  //   }
+  // }
   constructor(props) {
+    console.log("I am in constructor")
     super(props);
   
     this.state = {
@@ -36,15 +34,16 @@ class GithubBrowser extends Component {
   }
 
   render() {
-    if (this.state.checkingAuth){
-      return (
-          <View style={styles.container}>
-            <ActivityIndicatorIOS animating={true} size="large" style={styles.loader} />
+    console.log("I am in render function")
+    // if (this.state.checkingAuth){
+    //   return (
+    //       <View style={styles.container}>
+    //         <ActivityIndicatorIOS animating={true} size="large" style={styles.loader} />
             
-          </View>
-        )
+    //       </View>
+    //     )
 
-    }
+    // }
 
     if(this.state.isLoggedIn){
       return (
@@ -60,14 +59,22 @@ class GithubBrowser extends Component {
     }
     
   }
+
+  componentDidMount() {
+    console.log("I am in componentDidMount function")
+    AuthService.getAuthInfo((err, authInfo)=> {
+      this.setState({
+        checkingAuth: false,
+        isLoggedIn: authInfo != null
+      })
+    });
+  }
+
   onLogin() {
+    console.log("I am in login function");
     this.setState({isLoggedIn: true});
   }
-  // getInitialState(){
-  //   return {
-  //     isLoggedIn: false
-  //   }
-  // }
+  
 }
 
 const styles = StyleSheet.create({
