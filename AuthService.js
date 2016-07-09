@@ -32,7 +32,7 @@ class AuthService {
 		});
 	}
 	login(creds, cb){
-		var b = new buffer.Buffer(creds.username + 
+		var b = new buffer.Buffer(creds.username +
 				':' + creds.password);
 			var encodedAuth = b.toString('base64');
 			//console.log(b.toString('base64'));
@@ -57,14 +57,14 @@ class AuthService {
 			})
 			.then((results)=> {
 				console.log(results);
-				AsyncStorage.multiset([
+				AsyncStorage.multiSet([
 						[authKey, encodedAuth],
 						[userKey, JSON.stringify(results)]
 					], (err)=> {
 						if(err){
 							throw err;
 						}
-					})
+					});
 				return cb({success: true});
 			})
 			.catch((err)=> {

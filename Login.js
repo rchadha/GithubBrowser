@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image, 
+  Image,
   TextInput,
   TouchableHighlight,
   ActivityIndicatorIOS
@@ -17,6 +17,7 @@ var buffer = require('buffer');
 class Login extends Component {
 	constructor(props){
 		super(props);
+    //this.onLoginPressed = this.onLoginPressed.bind(this);
 
 		this.state = {
 			showProgress: false
@@ -41,17 +42,17 @@ class Login extends Component {
 			<View style={styles.container}>
 				<Image style={styles.logo} source={require('image!Octocat')} />
 				<Text style={styles.heading}> Github browser</Text>
-				<TextInput 
-					onChangeText={(text)=> this.setState({username: text})} 
-					style={styles.input} 
+				<TextInput
+					onChangeText={(text)=> this.setState({username: text})}
+					style={styles.input}
 					placeholder="Github username" />
-				<TextInput 
+				<TextInput
 					onChangeText={(text)=> this.setState({password: text})}
-					style={styles.input} 
+					style={styles.input}
 					placeholder="Github password" secureTextEntry="true" />
-				<TouchableHighlight 
+				<TouchableHighlight
 					onPress={this.onLoginPressed.bind(this)}
-					style={styles.button} > 
+					style={styles.button} >
 						<Text style={styles.buttonText}> Log in </Text>
 				</TouchableHighlight>
 
@@ -64,7 +65,7 @@ class Login extends Component {
 
 	onLoginPressed(){
 			console.log('Attempting to login with username ' + this.state.username)
-			this.setState({showProgress: true}); 
+			this.setState({showProgress: false});
 
 			var authService = require('./AuthService');
 			authService.login({
@@ -79,6 +80,7 @@ class Login extends Component {
 					this.props.onLogin();
 				}
 			});
+      //this.props.onLogin();
 		}
 }
 
