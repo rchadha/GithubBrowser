@@ -26,7 +26,8 @@ class GithubBrowser extends Component {
   constructor(props) {
     console.log("I am in constructor")
     super(props);
-  
+    this.onLogin = this.onLogin.bind(this);
+
     this.state = {
       isLoggedIn: false,
       checkingAuth: true
@@ -39,7 +40,7 @@ class GithubBrowser extends Component {
     //   return (
     //       <View style={styles.container}>
     //         <ActivityIndicatorIOS animating={true} size="large" style={styles.loader} />
-            
+
     //       </View>
     //     )
 
@@ -57,24 +58,25 @@ class GithubBrowser extends Component {
         <Login onLogin={this.onLogin} />
         )
     }
-    
+
   }
 
-  componentDidMount() {
-    console.log("I am in componentDidMount function")
-    AuthService.getAuthInfo((err, authInfo)=> {
-      this.setState({
-        checkingAuth: false,
-        isLoggedIn: authInfo != null
-      })
-    });
-  }
+  // componentDidMount() {
+  //   console.log("I am in componentDidMount function")
+  //   AuthService.getAuthInfo((err, authInfo)=> {
+  //     this.setState({
+  //       checkingAuth: false,
+  //       isLoggedIn: authInfo != null
+  //     })
+  //   });
+  // }
 
   onLogin() {
     console.log("I am in login function");
     this.setState({isLoggedIn: true});
+
   }
-  
+
 }
 
 const styles = StyleSheet.create({
