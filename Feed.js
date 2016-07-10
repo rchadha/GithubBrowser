@@ -14,8 +14,9 @@ class Feed extends Component {
 
   var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
-      dataSource: ds.cloneWithRows(['row 1 ', 'row 2'])
+      dataSource: ds.cloneWithRows([])
 		};
+    // this.fetchFeed();
 	}
 
   componentDidMount(){
@@ -67,7 +68,7 @@ renderRow(rowData){
       backgroundColor:'#fff',
       alignSelf:'center'
     }}>
-    {rowData}
+    {rowData.actor.login}
   </Text>
 }
 	render(){
