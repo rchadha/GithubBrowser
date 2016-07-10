@@ -5,7 +5,8 @@ import {
   Text,
   View,
   StyleSheet,
-  TabBarIOS
+  TabBarIOS,
+  NavigatorIOS
 } from 'react-native';
 
 var Feed = require('./Feed');
@@ -25,7 +26,16 @@ class AppContainer extends Component {
             selected={this.state.selectedTab == 'feed'}
             onPress={()=> this.setState({selectedTab: 'feed'})}
             >
-            <Feed />
+            <NavigatorIOS
+              style={{
+                flex: 1
+              }}
+              initialRoute={{
+                component: Feed,
+                title: 'Feed'
+              }}>
+
+            </NavigatorIOS>
           </TabBarIOS.Item>
           <TabBarIOS.Item
             title="Search"
