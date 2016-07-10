@@ -4,8 +4,12 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
-  ListView
+  ListView,
+  ActivityIndicatorIOS,
+  Image
 } from 'react-native';
+
+var moment = require('moment')
 
 class Feed extends Component {
 	constructor(props){
@@ -14,17 +18,13 @@ class Feed extends Component {
 
   var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 		this.state = {
-      dataSource: ds.cloneWithRows([])
+      dataSource: ds,
+      showProgress: true
 		};
-    // this.fetchFeed();
 	}
 
   componentDidMount(){
     this.fetchFeed();
-    // this.setState({
-    //   //dataSource: this.state.dataSource.cloneWithRows(feedItems)
-    //   test: 'rishab'
-    // });
   }
 
   fetchFeed = () => {
@@ -53,7 +53,8 @@ class Feed extends Component {
             .then((responseData)=>{
                var feedItems = responseData.filter((ev)=> ev.type == 'PushEvent');
               this.setState({
-                 dataSource: this.state.dataSource.cloneWithRows(feedItems)
+                 dataSource: this.state.dataSource.cloneWithRows(feedItems),
+                 showProgress: false
               });
             })
             .catch((err)=> {
@@ -63,19 +64,56 @@ class Feed extends Component {
   }
 
 renderRow(rowData){
-  return <Text style={{
-      color: '#333',
-      backgroundColor:'#fff',
-      alignSelf:'center'
-    }}>
-    {rowData.actor.login}
-  </Text>
+  return (
+    <View style={{
+        flex: 1,
+        flexDirection: 'row',
+        padding: 20,
+        alignItems: 'center',
+        borderColor: '#D7D7D7',
+        borderBottomWidth: 1
+      }}>
+      <Image
+        source={{uri: rowData.actor.avatar_url}}
+        style={{
+          height: 36,
+          width: 36,
+          borderRadius: 18
+        }} />
+
+      <View style={{paddingLeft: 20}}>
+           <Text style={{backgroundColor: '#fff'}}>{moment(rowData.created_at).fromNow()}</Text>
+           <Text style={{backgroundColor: '#fff'}}>{rowData.actor.login}</Text>
+           <Text style={{backgroundColor: '#fff'}}>{rowData.payload.ref.replace('refs/heads','')}</Text>
+           <Text style={{backgroundColor: '#fff'}}>
+             at <Text style={{
+               fontWeight: '600'
+             }}>{rowData.repo.name}</Text>
+           </Text>
+        </View>
+    </View>
+  );
 }
 	render(){
+    if(this.state.showProgress){
+      return (
+        <View style={{
+            flex: 1,
+            justifyContent: 'center'
+          }}>
+          <ActivityIndicatorIOS
+            size="large"
+            animating={true}
+          />
+
+        </View>
+      )
+    }
     return (
       <View style={{
         flex: 1,
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        margin: 20
       }}>
       <ListView
         dataSource={this.state.dataSource}
