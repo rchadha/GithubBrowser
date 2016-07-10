@@ -15,17 +15,17 @@ class AuthService {
 				return cb();
 			}
 
-			var zippedObj = _.zipObject(val);
-
-			if (!zippedObj[authKey]){
-				return cb();
-			}
+			// var zippedObj = _.zipObject(val);
+			//
+			// if (!zippedObj[authKey]){
+			// 	return cb();
+			// }
 
 			var authInfo = {
 				header: {
-					Authorization: 'Basic' + zippedObj[authKey]
+					Authorization: 'Basic' + val[0][1]
 				},
-				user: JSON.parse(zippedObj[userKey])
+				user: JSON.parse(val[1][1])
 			}
 
 			return cb(null, authInfo);
