@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 var Login = require('./Login');
+var AppContainer = require('./AppContainer');
 var AuthService = require('./AuthService');
 
 class GithubBrowser extends Component {
@@ -51,10 +52,8 @@ class GithubBrowser extends Component {
 
     if(this.state.isLoggedIn){
       return (
-          <View style={styles.container}>
-            <Text style={styles.welcome}> Login success </Text>
-          </View>
-        )
+        <AppContainer />
+      );
 
     }else{
       return (
