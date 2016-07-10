@@ -7,6 +7,11 @@ const userKey = 'user';
 
 class AuthService {
 	getAuthInfo(cb){
+		// Remove credentials
+		// let keys = [authKey, userKey];
+		// AsyncStorage.multiRemove(keys, (err) => {
+		//
+		// });
 		AsyncStorage.multiGet([authKey, userKey], (err, val)=> {
 			if (err){
 				return cb(err);
@@ -20,10 +25,13 @@ class AuthService {
 			// if (!zippedObj[authKey]){
 			// 	return cb();
 			// }
+			if(val[0][1] == null || val[1][1] == null){
+				return cb();
+			}
 
 			var authInfo = {
 				header: {
-					Authorization: 'Basic' + val[0][1]
+					'Authorization' : 'Basic ' + val[0][1]
 				},
 				user: JSON.parse(val[1][1])
 			}
